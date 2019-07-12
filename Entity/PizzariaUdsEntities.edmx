@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PizzariaUdsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaborId" Type="int" Nullable="false" />
+          <Property Name="TamanhoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoPersonalizacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoId" Type="int" Nullable="false" />
+          <Property Name="PersonalizacaoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Personalizacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Personalizacao" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tempo" Type="int" />
+          <Property Name="Valor" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sabor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sabor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tempo" Type="int" />
+        </EntityType>
+        <EntityType Name="Tamanho">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tamanho" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tempo" Type="int" />
+          <Property Name="Valor" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Pedido_Sabor">
+          <End Role="Sabor" Type="Self.Sabor" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sabor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="SaborId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Tamanho">
+          <End Role="Tamanho" Type="Self.Tamanho" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tamanho">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="TamanhoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoPersonalizacao_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoPersonalizacao" Type="Self.PedidoPersonalizacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PedidoPersonalizacao">
+              <PropertyRef Name="PedidoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoPersonalizacao_Personalizacao">
+          <End Role="Personalizacao" Type="Self.Personalizacao" Multiplicity="1" />
+          <End Role="PedidoPersonalizacao" Type="Self.PedidoPersonalizacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personalizacao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PedidoPersonalizacao">
+              <PropertyRef Name="PersonalizacaoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Fn_Pedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pedidoId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="tamanho" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="sabor" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="valor" Type="money" Nullable="false" />
+                <Property Name="valorTotal" Type="money" />
+                <Property Name="tempoTotal" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="PizzariaUdsModelStoreContainer">
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoPersonalizacao" EntityType="Self.PedidoPersonalizacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personalizacao" EntityType="Self.Personalizacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sabor" EntityType="Self.Sabor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tamanho" EntityType="Self.Tamanho" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Pedido_Sabor" Association="Self.FK_Pedido_Sabor">
+            <End Role="Sabor" EntitySet="Sabor" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Tamanho" Association="Self.FK_Pedido_Tamanho">
+            <End Role="Tamanho" EntitySet="Tamanho" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoPersonalizacao_Pedido" Association="Self.FK_PedidoPersonalizacao_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoPersonalizacao" EntitySet="PedidoPersonalizacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoPersonalizacao_Personalizacao" Association="Self.FK_PedidoPersonalizacao_Personalizacao">
+            <End Role="Personalizacao" EntitySet="Personalizacao" />
+            <End Role="PedidoPersonalizacao" EntitySet="PedidoPersonalizacao" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PizzariaUdsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PizzariaUdsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Pedido" EntityType="PizzariaUdsModel.Pedido" />
+          <EntitySet Name="PedidoPersonalizacao" EntityType="PizzariaUdsModel.PedidoPersonalizacao" />
+          <EntitySet Name="Personalizacao" EntityType="PizzariaUdsModel.Personalizacao" />
+          <EntitySet Name="Sabor" EntityType="PizzariaUdsModel.Sabor" />
+          <EntitySet Name="Tamanho" EntityType="PizzariaUdsModel.Tamanho" />
+          <AssociationSet Name="FK_Pedido_Sabor" Association="PizzariaUdsModel.FK_Pedido_Sabor">
+            <End Role="Sabor" EntitySet="Sabor" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Tamanho" Association="PizzariaUdsModel.FK_Pedido_Tamanho">
+            <End Role="Tamanho" EntitySet="Tamanho" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoPersonalizacao_Pedido" Association="PizzariaUdsModel.FK_PedidoPersonalizacao_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoPersonalizacao" EntitySet="PedidoPersonalizacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoPersonalizacao_Personalizacao" Association="PizzariaUdsModel.FK_PedidoPersonalizacao_Personalizacao">
+            <End Role="Personalizacao" EntitySet="Personalizacao" />
+            <End Role="PedidoPersonalizacao" EntitySet="PedidoPersonalizacao" />
+          </AssociationSet>
+          <FunctionImport Name="Fn_Pedido" IsComposable="true" ReturnType="Collection(PizzariaUdsModel.Fn_Pedido_Result)">
+            <Parameter Name="pedidoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaborId" Type="Int32" Nullable="false" />
+          <Property Name="TamanhoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sabor" Relationship="PizzariaUdsModel.FK_Pedido_Sabor" FromRole="Pedido" ToRole="Sabor" />
+          <NavigationProperty Name="Tamanho" Relationship="PizzariaUdsModel.FK_Pedido_Tamanho" FromRole="Pedido" ToRole="Tamanho" />
+          <NavigationProperty Name="PedidoPersonalizacao" Relationship="PizzariaUdsModel.FK_PedidoPersonalizacao_Pedido" FromRole="Pedido" ToRole="PedidoPersonalizacao" />
+        </EntityType>
+        <EntityType Name="PedidoPersonalizacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoId" Type="Int32" Nullable="false" />
+          <Property Name="PersonalizacaoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="PizzariaUdsModel.FK_PedidoPersonalizacao_Pedido" FromRole="PedidoPersonalizacao" ToRole="Pedido" />
+          <NavigationProperty Name="Personalizacao" Relationship="PizzariaUdsModel.FK_PedidoPersonalizacao_Personalizacao" FromRole="PedidoPersonalizacao" ToRole="Personalizacao" />
+        </EntityType>
+        <EntityType Name="Personalizacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Personalizacao1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tempo" Type="Int32" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="PedidoPersonalizacao" Relationship="PizzariaUdsModel.FK_PedidoPersonalizacao_Personalizacao" FromRole="Personalizacao" ToRole="PedidoPersonalizacao" />
+        </EntityType>
+        <EntityType Name="Sabor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sabor1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tempo" Type="Int32" />
+          <NavigationProperty Name="Pedido" Relationship="PizzariaUdsModel.FK_Pedido_Sabor" FromRole="Sabor" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Tamanho">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tamanho1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tempo" Type="Int32" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Pedido" Relationship="PizzariaUdsModel.FK_Pedido_Tamanho" FromRole="Tamanho" ToRole="Pedido" />
+        </EntityType>
+        <Association Name="FK_Pedido_Sabor">
+          <End Type="PizzariaUdsModel.Sabor" Role="Sabor" Multiplicity="1" />
+          <End Type="PizzariaUdsModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sabor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="SaborId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Tamanho">
+          <End Type="PizzariaUdsModel.Tamanho" Role="Tamanho" Multiplicity="1" />
+          <End Type="PizzariaUdsModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tamanho">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="TamanhoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoPersonalizacao_Pedido">
+          <End Type="PizzariaUdsModel.Pedido" Role="Pedido" Multiplicity="1" />
+          <End Type="PizzariaUdsModel.PedidoPersonalizacao" Role="PedidoPersonalizacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PedidoPersonalizacao">
+              <PropertyRef Name="PedidoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoPersonalizacao_Personalizacao">
+          <End Type="PizzariaUdsModel.Personalizacao" Role="Personalizacao" Multiplicity="1" />
+          <End Type="PizzariaUdsModel.PedidoPersonalizacao" Role="PedidoPersonalizacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personalizacao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PedidoPersonalizacao">
+              <PropertyRef Name="PersonalizacaoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Fn_Pedido_Result">
+          <Property Type="String" Name="tamanho" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sabor" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="valor" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="valorTotal" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="tempoTotal" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PizzariaUdsModelStoreContainer" CdmEntityContainer="PizzariaUdsEntities">
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="PizzariaUdsModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="TamanhoId" ColumnName="TamanhoId" />
+                <ScalarProperty Name="SaborId" ColumnName="SaborId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoPersonalizacao">
+            <EntityTypeMapping TypeName="PizzariaUdsModel.PedidoPersonalizacao">
+              <MappingFragment StoreEntitySet="PedidoPersonalizacao">
+                <ScalarProperty Name="PersonalizacaoId" ColumnName="PersonalizacaoId" />
+                <ScalarProperty Name="PedidoId" ColumnName="PedidoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personalizacao">
+            <EntityTypeMapping TypeName="PizzariaUdsModel.Personalizacao">
+              <MappingFragment StoreEntitySet="Personalizacao">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+                <ScalarProperty Name="Personalizacao1" ColumnName="Personalizacao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sabor">
+            <EntityTypeMapping TypeName="PizzariaUdsModel.Sabor">
+              <MappingFragment StoreEntitySet="Sabor">
+                <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+                <ScalarProperty Name="Sabor1" ColumnName="Sabor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tamanho">
+            <EntityTypeMapping TypeName="PizzariaUdsModel.Tamanho">
+              <MappingFragment StoreEntitySet="Tamanho">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+                <ScalarProperty Name="Tamanho1" ColumnName="Tamanho" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Fn_Pedido" FunctionName="PizzariaUdsModel.Store.Fn_Pedido">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PizzariaUdsModel.Fn_Pedido_Result">
+                <ScalarProperty Name="tamanho" ColumnName="tamanho" />
+                <ScalarProperty Name="sabor" ColumnName="sabor" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="valorTotal" ColumnName="valorTotal" />
+                <ScalarProperty Name="tempoTotal" ColumnName="tempoTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

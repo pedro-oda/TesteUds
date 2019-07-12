@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PizzariaUdsModelStoreContainer" CdmEntityContainer="PizzariaUdsEntities">
+    <EntitySetMapping Name="Pedido">
+      <EntityTypeMapping TypeName="PizzariaUdsModel.Pedido">
+        <MappingFragment StoreEntitySet="Pedido">
+          <ScalarProperty Name="TamanhoId" ColumnName="TamanhoId" />
+          <ScalarProperty Name="SaborId" ColumnName="SaborId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PedidoPersonalizacao">
+      <EntityTypeMapping TypeName="PizzariaUdsModel.PedidoPersonalizacao">
+        <MappingFragment StoreEntitySet="PedidoPersonalizacao">
+          <ScalarProperty Name="PersonalizacaoId" ColumnName="PersonalizacaoId" />
+          <ScalarProperty Name="PedidoId" ColumnName="PedidoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Personalizacao">
+      <EntityTypeMapping TypeName="PizzariaUdsModel.Personalizacao">
+        <MappingFragment StoreEntitySet="Personalizacao">
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+          <ScalarProperty Name="Personalizacao1" ColumnName="Personalizacao" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sabor">
+      <EntityTypeMapping TypeName="PizzariaUdsModel.Sabor">
+        <MappingFragment StoreEntitySet="Sabor">
+          <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+          <ScalarProperty Name="Sabor1" ColumnName="Sabor" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tamanho">
+      <EntityTypeMapping TypeName="PizzariaUdsModel.Tamanho">
+        <MappingFragment StoreEntitySet="Tamanho">
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="Tempo" ColumnName="Tempo" />
+          <ScalarProperty Name="Tamanho1" ColumnName="Tamanho" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Fn_Pedido" FunctionName="PizzariaUdsModel.Store.Fn_Pedido">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PizzariaUdsModel.Fn_Pedido_Result">
+          <ScalarProperty Name="tamanho" ColumnName="tamanho" />
+          <ScalarProperty Name="sabor" ColumnName="sabor" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="valorTotal" ColumnName="valorTotal" />
+          <ScalarProperty Name="tempoTotal" ColumnName="tempoTotal" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="306e0bea718b441c9c41919f7c713975" Name="Diagram1">
+        <EntityTypeShape EntityType="PizzariaUdsModel.Pedido" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="PizzariaUdsModel.PedidoPersonalizacao" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="PizzariaUdsModel.Personalizacao" Width="1.5" PointX="4.375" PointY="3.375" />
+        <EntityTypeShape EntityType="PizzariaUdsModel.Sabor" Width="1.5" PointX="1.5" PointY="3.5" />
+        <EntityTypeShape EntityType="PizzariaUdsModel.Tamanho" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="PizzariaUdsModel.FK_Pedido_Sabor" />
+        <AssociationConnector Association="PizzariaUdsModel.FK_Pedido_Tamanho" />
+        <AssociationConnector Association="PizzariaUdsModel.FK_PedidoPersonalizacao_Pedido" />
+        <AssociationConnector Association="PizzariaUdsModel.FK_PedidoPersonalizacao_Personalizacao" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
